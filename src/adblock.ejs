@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('partials/head.ejs',
+        {
+            page:'adblock',
+            title:'AdBlock Test',
+            description:'Check how well your ad blocker performs',
+            url:'./adblock.html',
+            preview_thumbnail:'./assets/adblock/icon.svg',
+            keywords:'adblock test,ad block test,ad blocker test,adblock,test adblock,analytics,trackers,ads,cosmetic filter,ublock, ublockorigin,adblock extension,script loading'
+        }) %>
+	<body class="_overflowhidden">
+
+		<%- include('partials/support_me.ejs') %>
+		<%- include('partials/header.ejs', {page:'adblock'}) %>
+
+		<main class="_f-center">
+			<noscript>
+				<div class="_bg-red _txt-white _radius _p-1 better_r _py-2 _mt-2">
+					<h3>JavaScript is required to run this test. Please enable JavaScript in your browser settings.</h3>
+					<style>
+						#m_test{
+							display: none;
+						}
+					</style>
+				</div>
+			  </noscript>
+                        
+		</main>
+		<%- include('partials/footer.ejs') %>
+		<%- include('partials/gotop.ejs') %>
+	</body>
+</html>
