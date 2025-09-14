@@ -19,13 +19,30 @@
 				<div class="_bg-red _txt-white _radius _p-1 better_r _py-2 _mt-2">
 					<h3>JavaScript is required to run this test. Please enable JavaScript in your browser settings.</h3>
 					<style>
-						#m_test{
-							display: none;
-						}
+						#m_test{ display: none; }
 					</style>
 				</div>
-			  </noscript>
-                        
+			</noscript>
+
+			<section class="cnt _mt-1 _w-100">
+				<div class="card _p-1 _mb-1">
+					<h2>AdBlock Test</h2>
+					<p>Checks connectivity to common ad, analytics, tracking and OEM domains. Click Start to run.</p>
+					<div class="_d-flex" style="gap:.5rem;align-items:center;flex-wrap:wrap;">
+						<button id="btn_start" class="btn">Start Test</button>
+						<button data-a11y-dialog-show="dlg_settings" class="btn btn-s">Settings</button>
+						<button data-a11y-dialog-show="dlg_faq" class="btn btn-s">FAQ</button>
+						<button data-a11y-dialog-show="dlg_logs" class="btn btn-s">Logs</button>
+					</div>
+					<div id="progress" class="_mt-1"></div>
+				</div>
+				<div id="testArea" class="test_wrapper _w-100"></div>
+			</section>
+
+			<%- include('partials/adblock/settings.ejs') %>
+			<%- include('partials/adblock/logs.ejs') %>
+			<%- include('partials/adblock/results.ejs') %>
+			<%- include('partials/adblock/faq.ejs') %>
 		</main>
 		<%- include('partials/footer.ejs') %>
 		<%- include('partials/gotop.ejs') %>
