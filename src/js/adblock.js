@@ -165,31 +165,54 @@ function runScriptBlockTest() {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-	new navbar()
-	new themeManager()
-	new gotop()
-	new aos()
+	try {
+		new navbar()
+		new themeManager()
+		new gotop()
+		new aos()
+	} catch (e) {
+		console.error('Init error:', e)
+	}
 
-	// Initialize dialogs
-	document
-		.querySelectorAll('[data-a11y-dialog]')
-		.forEach((el) => {
+	// Initialize dialogs (ignore failures)
+	try {
+		document.querySelectorAll('[data-a11y-dialog]').forEach((el) => {
 			try {
 				new A11yDialog(el)
-			} catch (e) {}
+			} catch {}
 		})
+	} catch {}
 
-	const btn = document.getElementById('btn_start')
-	if (btn) {
-		btn.addEventListener('click', async () => {
-			btn.setAttribute('disabled', 'true')
+	const progress = document.getElementById('progress')
+	if (progress) progress.textContent = 'Ready. Click Start.'
+
+	async function handleStart(targetBtn) {
+		try {
+			if (targetBtn) targetBtn.setAttribute('disabled', 'true')
 			log('Starting tests...')
 			const cosmetic = runCosmeticTest()
 			log('Cosmetic filter: ' + (cosmetic ? 'active' : 'not detected'))
 			const scriptBlocked = await runScriptBlockTest()
 			log('Ad script loading: ' + (scriptBlocked ? 'blocked' : 'not blocked'))
 			await runAllTests()
-			btn.removeAttribute('disabled')
-		})
+		} catch (err) {
+			console.error(err)
+			if (progress) progress.textContent = 'Error: ' + (err && err.message ? err.message : err)
+		} finally {
+			if (targetBtn) targetBtn.removeAttribute('disabled')
+		}
 	}
+
+	const btn = document.getElementById('btn_start')
+	if (btn) {
+		btn.addEventListener('click', () => handleStart(btn))
+	}
+
+	// Fallback: delegate click in case button is re-rendered later
+	document.addEventListener('click', (ev) => {
+		const t = ev.target
+		if (!(t instanceof Element)) return
+		const start = t.closest('#btn_start')
+		if (start) handleStart(start)
+	})
 })

@@ -17,7 +17,7 @@ module.exports = {
 		path: config.build,
 		clean: false,
 		assetModuleFilename: '[path][name][ext]',
-		publicPath: process.env.PUBLIC_PATH || '/'
+    	publicPath: 'auto'
 	},
 	plugins: [
 		new CopyWebpackPlugin({
